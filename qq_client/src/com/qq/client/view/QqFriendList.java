@@ -39,7 +39,7 @@ public class QqFriendList extends JFrame implements ActionListener, MouseListene
 	
 	CardLayout cl;
 	
-	JLabel[] jbls1;
+	JLabel[] jlbs1;
 	
 	String ownerId;
 	public static void main(String[] args) {
@@ -57,14 +57,14 @@ public class QqFriendList extends JFrame implements ActionListener, MouseListene
 		jpfrd1 = new JPanel(new BorderLayout());
 		
 		jpfrd2 = new JPanel(new GridLayout(50, 1, 4, 4));
-		jbls1 = new JLabel[50];
-		for(int  i = 0; i < jbls1.length; ++i) {
-			jbls1[i] = new JLabel(i + 1 + "", new ImageIcon("image/mm.jpg"), JLabel.LEFT);
-			jbls1[i].setEnabled(false);
-			if(jbls1[i].getText().equals(this.ownerId))
-				jbls1[i].setEnabled(true);
-			jpfrd2.add(jbls1[i]);
-			jbls1[i].addMouseListener(this);
+		jlbs1 = new JLabel[50];
+		for(int  i = 0; i < jlbs1.length; ++i) {
+			jlbs1[i] = new JLabel(i + 1 + "", new ImageIcon("image/mm.jpg"), JLabel.LEFT);
+			jlbs1[i].setEnabled(false);
+			if(jlbs1[i].getText().equals(this.ownerId))
+				jlbs1[i].setEnabled(true);
+			jpfrd2.add(jlbs1[i]);
+			jlbs1[i].addMouseListener(this);
 		}
 		
 		jpfrd3 = new JPanel(new GridLayout(2, 1)); 
@@ -122,7 +122,7 @@ public class QqFriendList extends JFrame implements ActionListener, MouseListene
 		String[] onlineFriend = m.getCon().split(" ");
 		
 		for(int i = 0; i < onlineFriend.length; ++i) {
-			jbls1[Integer.parseInt(onlineFriend[i]) - 1].setEnabled(true);
+			jlbs1[Integer.parseInt(onlineFriend[i]) - 1].setEnabled(true);
 		}
 	}
 	

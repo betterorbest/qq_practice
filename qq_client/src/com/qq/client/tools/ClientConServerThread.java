@@ -39,7 +39,7 @@ public class ClientConServerThread extends Thread{
 					String con = m.getCon();
 					String[] friends = con.split(" ");
 					String getter = m.getGetter();
-					QqFriendList qqFriendList = ManageQqFriendList.getQqFriendList(getter);
+					QqFriendList qqFriendList = ManageQqFriendList.getQqFriendList();
 					if(qqFriendList != null)
 						qqFriendList.updateFriend(m);
 				}

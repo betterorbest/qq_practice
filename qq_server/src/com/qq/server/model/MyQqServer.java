@@ -29,7 +29,7 @@ public class MyQqServer {
 				User u = (User)ois.readObject();
 				Message m = new Message();
 				ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
-				if(u.getPasswd().equals("123456")) {
+				if(u.getPasswd().equals("1")) {
 					m.setMesType("1");
 					oos.writeObject(m);	
 					

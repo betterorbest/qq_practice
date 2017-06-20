@@ -36,6 +36,7 @@ public class QqChat extends JFrame implements ActionListener{
 		this.ownerId = ownerId;
 		this.friendId = friendId;
 		jta = new JTextArea();
+		jta.setEditable(false);
 		jtf = new JTextField(15);
 		jb = new JButton("·¢ËÍ");
 		jb.addActionListener(this);
@@ -73,8 +74,10 @@ public class QqChat extends JFrame implements ActionListener{
 			m.setCon(jtf.getText());
 			m.setSendTime(new java.util.Date().toString());
 			
+			jtf.setText("");
+			
 			try {
-				ObjectOutputStream oos = new ObjectOutputStream(ManageClientConServerThread.getClientConServerThread(ownerId).getSocket().getOutputStream());
+				ObjectOutputStream oos = new ObjectOutputStream(ManageClientConServerThread.getClientConServerThread().getSocket().getOutputStream());
 				oos.writeObject(m);
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block

@@ -119,9 +119,9 @@ public class QqClientLogin extends JFrame implements ActionListener{
 			if(qqClientUser.checkUser(u)) {
 				try {
 					QqFriendList qqFriendList = new QqFriendList(u.getUserId());
-					ManageQqFriendList.addQqFriendList(u.getUserId(), qqFriendList);
+					ManageQqFriendList.addQqFriendList(qqFriendList);
 					
-					ObjectOutputStream oos = new ObjectOutputStream(ManageClientConServerThread.getClientConServerThread(u.getUserId()).getSocket().getOutputStream());
+					ObjectOutputStream oos = new ObjectOutputStream(ManageClientConServerThread.getClientConServerThread().getSocket().getOutputStream());
 				
 					Message m = new Message();
 					m.setMesType(MessageType.message_get_online_friend);

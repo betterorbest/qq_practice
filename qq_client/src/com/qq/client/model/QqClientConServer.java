@@ -3,6 +3,7 @@
  */
 package com.qq.client.model;
 
+import java.io.Closeable;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
@@ -11,6 +12,7 @@ import java.net.Socket;
 import com.qq.client.tools.ClientConServerThread;
 import com.qq.client.tools.ManageClientConServerThread;
 import com.qq.common.Message;
+import com.qq.common.MessageType;
 import com.qq.common.User;
 
 public class QqClientConServer {
@@ -37,10 +39,10 @@ public class QqClientConServer {
 			ObjectInputStream ois = new ObjectInputStream(s.getInputStream());
 			Message ms = (Message)ois.readObject();
 			
-			if(ms.getMesType().equals("1")) {
+			if(ms.getMesType().equals(MessageType.message_login_succeed)) {
 				ClientConServerThread ccst = new ClientConServerThread(s);
 				ccst.start();
-				ManageClientConServerThread.addClientConServerThread(((User)o).getUserId(), ccst);
+				ManageClientConServerThread.addClientConServerThread(ccst);
 				b = true;
 			}
 			else {
@@ -48,7 +50,8 @@ public class QqClientConServer {
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
-			e.printStackTrace();
+			System.out.println("¿Í»§¶ËµÇÂ½Òì³£");
+			e.printStackTrace();	
 		} finally {
 			
 		}

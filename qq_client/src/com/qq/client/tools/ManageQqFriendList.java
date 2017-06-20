@@ -1,17 +1,15 @@
 package com.qq.client.tools;
 
-import java.util.HashMap;
-
 import com.qq.client.view.QqFriendList;
 
 public class ManageQqFriendList {
-	private static HashMap hm = new HashMap<String, QqFriendList>();
-	public static void addQqFriendList(String qqId, QqFriendList qqFriendList) {
-		hm.put(qqId, qqFriendList);
+	private static QqFriendList qqFriendList;
+	public static void addQqFriendList(QqFriendList qqfl) {
+		qqFriendList = qqfl;
 	}
 	
-	public static QqFriendList getQqFriendList(String qqId) {
-		return (QqFriendList)hm.get(qqId);
+	public static QqFriendList getQqFriendList() {
+		return qqFriendList;
 	}
 	
 }
