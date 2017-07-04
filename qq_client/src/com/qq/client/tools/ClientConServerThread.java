@@ -34,7 +34,14 @@ public class ClientConServerThread extends Thread{
 			
 				if(m.getMesType().equals(MessageType.message_communication_message)) {
 					QqChat qqChat = ManageQqChat.getQqChat(m.getGetter() + " " + m.getSender());
-					qqChat.showMessage(m);
+					if(qqChat != null)
+						qqChat.showMessage(m);
+					else {
+						//TODO 聊天窗口未打开
+						System.out.println(m.getSender() + "正与你联系");
+					}
+					
+					
 				}else if(m.getMesType().equals(MessageType.message_return_online_friend)) {
 					String con = m.getCon();
 					String[] friends = con.split(" ");
@@ -49,9 +56,11 @@ public class ClientConServerThread extends Thread{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
-			
 		}
 	}
 	
+	public static void main(String[] argv) {
+		//ClientConServerThread thread = new ClientConServerThread(null);
+		//thread.start();
+	}
 }

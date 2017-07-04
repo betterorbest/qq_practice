@@ -6,6 +6,9 @@ package com.qq.client.view;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.io.Closeable;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -19,10 +22,11 @@ import javax.swing.JTextField;
 
 import com.qq.client.model.QqClientConServer;
 import com.qq.client.tools.ManageClientConServerThread;
+import com.qq.client.tools.ManageQqChat;
 import com.qq.common.Message;
 import com.qq.common.MessageType;
 
-public class QqChat extends JFrame implements ActionListener{
+public class QqChat extends JFrame implements ActionListener, WindowListener{
 
 	JTextArea jta;
 	JTextField jtf;
@@ -50,11 +54,12 @@ public class QqChat extends JFrame implements ActionListener{
 		this.setTitle(ownerId + " 你正在和" + friendId + "聊天");
 		this.setSize(300, 200);
 		this.setVisible(true);
-		
+		this.addWindowListener(this);
+		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}
 
 	public void showMessage(Message m) {
-		String info = m.getSender() + "对" + m.getGetter() + "说 : " + m.getCon() + "\r\n";
+		String info = m.getSender() + "对你说 : " + m.getCon() + "\r\n";
 		this.jta.append(info);
 	}
 	
@@ -74,8 +79,8 @@ public class QqChat extends JFrame implements ActionListener{
 			m.setCon(jtf.getText());
 			m.setSendTime(new java.util.Date().toString());
 			
+			jta.append("你对" + m.getGetter() + "说: " + jtf.getText() + "\r\n");
 			jtf.setText("");
-			
 			try {
 				ObjectOutputStream oos = new ObjectOutputStream(ManageClientConServerThread.getClientConServerThread().getSocket().getOutputStream());
 				oos.writeObject(m);
@@ -83,9 +88,51 @@ public class QqChat extends JFrame implements ActionListener{
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			
-			
 		}
+	}
+	
+	
+	@Override
+	public void windowActivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosing(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowIconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowOpened(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosed(WindowEvent arg0) {
+		// TODO Auto-generated method
+		System.out.println("nice");
+		ManageQqChat.removeQqChat(ownerId + " " + friendId);
 	}
 
 
