@@ -131,10 +131,8 @@ public class QqChat extends JFrame implements ActionListener, WindowListener{
 	@Override
 	public void windowClosed(WindowEvent arg0) {
 		// TODO Auto-generated method
-		System.out.println("nice");
+		System.out.println(ownerId + "'s qqChat exit");
 		ManageQqChat.removeQqChat(ownerId + " " + friendId);
 	}
-
-
-
+	
 }

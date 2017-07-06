@@ -1,5 +1,6 @@
 package com.qq.client.tools;
 
+import java.awt.Window;
 import java.util.HashMap;
 
 import com.qq.client.view.QqChat;
@@ -17,5 +18,11 @@ public class ManageQqChat {
 	
 	public static void removeQqChat(String loginIdAndFriendId) {
 		hm.remove(loginIdAndFriendId);
+	}
+	
+	public static void closeAllQqChat() {
+		for (Object qqChat : hm.values()) {
+			((QqChat)qqChat).dispose();
+		}
 	}
 }

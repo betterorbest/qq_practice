@@ -105,6 +105,7 @@ public class QqClientLogin extends JFrame implements ActionListener{
 		this.setResizable(false);
 		this.setVisible(true);
 		
+		
 	}
 
 	@Override

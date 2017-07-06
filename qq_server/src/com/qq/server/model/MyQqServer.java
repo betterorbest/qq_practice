@@ -21,7 +21,7 @@ public class MyQqServer {
 		try {
 			System.out.println("·şÎñÆ÷ÔÚ9999¼àÌı");
 			ServerSocket ss = new ServerSocket(9999);
-			
+		
 			while(true) {
 				Socket s = ss.accept();
 				

@@ -7,7 +7,10 @@ import java.io.Closeable;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
+import java.net.ConnectException;
+import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.net.SocketAddress;
 
 import com.qq.client.tools.ClientConServerThread;
 import com.qq.client.tools.ManageClientConServerThread;
@@ -17,7 +20,7 @@ import com.qq.common.User;
 
 public class QqClientConServer {
 
-	public Socket s;
+	public static Socket s = null;
 //	public MyQqClientConServer() {
 //		// TODO Auto-generated constructor stub
 //		try {
@@ -33,6 +36,7 @@ public class QqClientConServer {
 		boolean b = false;
 		try {
 			s = new Socket("127.0.0.1", 9999);
+			
 			ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
 			oos.writeObject(o); 
 			
@@ -48,17 +52,26 @@ public class QqClientConServer {
 			else {
 				b = false;
 			}
+		} catch(ConnectException e) {
+			
+			System.out.println("服务器连接异常");
+			
 		} catch (Exception e) {
 			// TODO: handle exception
+			
 			System.out.println("客户端登陆异常");
-			e.printStackTrace();	
+			
+			e.printStackTrace();
+			
 		} finally {
 			
 		}
 		
+		
 		return b;
 		
 	}
+	
 	
 
 }
