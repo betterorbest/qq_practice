@@ -23,10 +23,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 
+import com.qq.client.model.QqClientConServer;
 import com.qq.client.tools.ManageQqChat;
 import com.qq.common.Message;
 
-public class QqFriendList extends JFrame implements ActionListener, MouseListener{
+public class QqFriendList extends JFrame implements ActionListener, MouseListener, WindowListener{
 
 	//卡片布局
 	//第一张卡片
@@ -118,52 +119,8 @@ public class QqFriendList extends JFrame implements ActionListener, MouseListene
 		this.setResizable(false);
 		this.setVisible(true);
 		
-		this.addWindowListener(new WindowListener() {
-			
-			@Override
-			public void windowOpened(WindowEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void windowIconified(WindowEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void windowDeiconified(WindowEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void windowDeactivated(WindowEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void windowClosing(WindowEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void windowClosed(WindowEvent arg0) {
-				// TODO Auto-generated method stub
-				System.out.println("friend list exit");
-				ManageQqChat.closeAllQqChat();
-				System.exit(0);
-			}
-			
-			@Override
-			public void windowActivated(WindowEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
+		this.addWindowListener(this);
+	
 	}
 
 	public void updateFriend(Message m) {
@@ -171,6 +128,14 @@ public class QqFriendList extends JFrame implements ActionListener, MouseListene
 		
 		for(int i = 0; i < onlineFriend.length; ++i) {
 			jlbs1[Integer.parseInt(onlineFriend[i]) - 1].setEnabled(true);
+		}
+	}
+	
+	public void updateOutFriend(Message m) {
+		String[] onlineFriend = m.getCon().split(" ");
+		
+		for(int i = 0; i < onlineFriend.length; ++i) {
+			jlbs1[Integer.parseInt(onlineFriend[i]) - 1].setEnabled(false);
 		}
 	}
 	
@@ -217,6 +182,51 @@ public class QqFriendList extends JFrame implements ActionListener, MouseListene
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowActivated(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosed(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		System.out.println("friend list exit");
+		new QqClientConServer().sendLoginOutInfoToServer(this.ownerId);
+		ManageQqChat.closeAllQqChat();
+		System.exit(0);
+	}
+
+	@Override
+	public void windowClosing(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowIconified(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowOpened(WindowEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}

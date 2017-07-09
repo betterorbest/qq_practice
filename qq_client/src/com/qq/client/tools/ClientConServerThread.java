@@ -43,12 +43,19 @@ public class ClientConServerThread extends Thread{
 					
 					
 				}else if(m.getMesType().equals(MessageType.message_return_online_friend)) {
-					String con = m.getCon();
-					String[] friends = con.split(" ");
-					String getter = m.getGetter();
+//					String con = m.getCon();
+//					String[] friends = con.split(" ");
+//					String getter = m.getGetter();
 					QqFriendList qqFriendList = ManageQqFriendList.getQqFriendList();
 					if(qqFriendList != null)
 						qqFriendList.updateFriend(m);
+				}else if(m.getMesType().equals(MessageType.message_login_out)) {
+//					String con = m.getCon();
+//					String[] friends = con.split(" ");
+//					String getter = m.getGetter();
+					QqFriendList qqFriendList = ManageQqFriendList.getQqFriendList();
+					if(qqFriendList != null)
+						qqFriendList.updateOutFriend(m);
 				}
 				
 				

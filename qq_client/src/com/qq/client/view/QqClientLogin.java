@@ -23,7 +23,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
-import com.qq.client.model.QqClientUser;
+import com.qq.client.model.QqClientConServer;
 import com.qq.client.tools.ManageClientConServerThread;
 import com.qq.client.tools.ManageQqFriendList;
 import com.qq.common.Message;
@@ -112,12 +112,12 @@ public class QqClientLogin extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
 		if(arg0.getSource() == jp1_jb1) {
-			QqClientUser qqClientUser = new QqClientUser();
+			QqClientConServer qqClientConServer = new QqClientConServer();
 			User u = new User();
 			u.setUserId(jp2_jtf.getText().trim());
 			u.setPasswd(new String(jp2_jpf.getPassword()));
 			
-			if(qqClientUser.checkUser(u)) {
+			if(qqClientConServer.sendLoginInfoToServer(u)) {
 				try {
 					QqFriendList qqFriendList = new QqFriendList(u.getUserId());
 					ManageQqFriendList.addQqFriendList(qqFriendList);

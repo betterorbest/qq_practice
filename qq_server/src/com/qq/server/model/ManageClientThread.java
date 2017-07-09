@@ -16,6 +16,14 @@ public class ManageClientThread {
 		return (ServerConClientThread)hm.get(uid);
 	}
 	
+	public static void removeClientThread(String uid) {
+		hm.remove(uid);
+	}
+	
+	public static boolean hasClientThread(String uid) {
+		return hm.get(uid) != null;
+	}
+	
 	public static String getAllOnLineUserId() {
 		Iterator it = hm.keySet().iterator();
 		String res = "";
@@ -25,4 +33,5 @@ public class ManageClientThread {
 		
 		return res; 
 	}
+	
 }

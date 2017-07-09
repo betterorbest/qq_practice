@@ -12,25 +12,27 @@ import com.qq.common.MessageType;
 
 public class ServerConClientThread extends Thread{
 	Socket s;
+	boolean isRunning;
 	public ServerConClientThread(Socket s) {
 		//服务器与客户端的连接赋给s
 		this.s = s;
-		
+		this.isRunning = true;
 	}
 	
-	public void notifyOther(String myId) {
-		HashMap hm = ManageClientThread.hm;
-		Iterator it = hm.keySet().iterator();
-		while(it.hasNext()) {
-			Message m = new Message();
+	public void notifyOther(String myId, String messageType) {
+		HashMap hm=ManageClientThread.hm;
+		Iterator it=hm.keySet().iterator();
+		while(it.hasNext()) 
+		{
+			Message m=new Message();
+			m.setMesType(messageType);
 			m.setCon(myId);
-			m.setMesType(MessageType.message_return_online_friend);
-			String onlineFriend = it.next().toString();
+			String onLineUserId=it.next().toString();
 			try {
-				ObjectOutputStream oos = new ObjectOutputStream(ManageClientThread.getConClientThread(onlineFriend).s.getOutputStream());
-				m.setGetter(onlineFriend);
+				ObjectOutputStream oos=new ObjectOutputStream(ManageClientThread.getConClientThread(onLineUserId).s.getOutputStream());
+				m.setGetter(onLineUserId);
 				oos.writeObject(m);
-			} catch (Exception e) {
+			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -38,15 +40,19 @@ public class ServerConClientThread extends Thread{
 	}
 	
 	public void run() {
-		while(true) {
+		while(isRunning) {
 			try {
 				ObjectInputStream ois = new ObjectInputStream(s.getInputStream());
 				Message m = (Message)ois.readObject();
 				
 				if(m.getMesType().equals(MessageType.message_communication_message)) {
 					ServerConClientThread scct = ManageClientThread.getConClientThread(m.getGetter());
-					ObjectOutputStream oos = new ObjectOutputStream(scct.s.getOutputStream());
-					oos.writeObject(m);
+					if(scct != null) {
+						ObjectOutputStream oos = new ObjectOutputStream(scct.s.getOutputStream());
+						oos.writeObject(m);
+					}
+					else
+						System.out.println(m.getGetter() + " has exited");
 					System.out.println(m.getSender() + " to " + m.getGetter() + "say: " + m.getCon());
 				}else if(m.getMesType().equals(MessageType.message_get_online_friend)) {
 					String res = ManageClientThread.getAllOnLineUserId();
@@ -56,7 +62,10 @@ public class ServerConClientThread extends Thread{
 					m1.setGetter(m.getSender());
 					ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
 					oos.writeObject(m1);
-					
+				}else if(m.getMesType().equals(MessageType.message_login_out)) {
+					this.isRunning = false;
+					ManageClientThread.removeClientThread(m.getSender());
+					notifyOther(m.getSender(), MessageType.message_login_out);
 				}
 				
 			} catch (Exception e) {

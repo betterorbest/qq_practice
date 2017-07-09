@@ -69,7 +69,34 @@ public class QqClientConServer {
 		
 		
 		return b;
+	}
+	
+	
+	public boolean sendLoginOutInfoToServer(String userId) {
+		boolean b = false;
+		try {
+			Message message = new Message();
+			message.setMesType(MessageType.message_login_out);
+			message.setSender(userId);
+			ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
+			oos.writeObject(message); 
+			
+			b = true;
+		} catch(ConnectException e) {
+			System.out.println("服务器连接异常");
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			
+			System.out.println("客户端退出登录异常");
+			
+			e.printStackTrace();
+			
+		} finally {
+			
+		}
 		
+		return b;
 	}
 	
 	

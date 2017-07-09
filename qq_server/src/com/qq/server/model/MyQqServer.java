@@ -12,6 +12,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 import com.qq.common.Message;
+import com.qq.common.MessageType;
 import com.qq.common.User;
 
 public class MyQqServer {
@@ -29,14 +30,14 @@ public class MyQqServer {
 				User u = (User)ois.readObject();
 				Message m = new Message();
 				ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
-				if(u.getPasswd().equals("1")) {
+				if(u.getPasswd().equals("1") && !ManageClientThread.hasClientThread(u.getUserId())) {
 					m.setMesType("1");
 					oos.writeObject(m);	
 					
 					ServerConClientThread serverConClientThread = new ServerConClientThread(s);
 					ManageClientThread.addClientThread(u.getUserId(), serverConClientThread);
 					serverConClientThread.start();
-					serverConClientThread.notifyOther(u.getUserId());
+					serverConClientThread.notifyOther(u.getUserId(), MessageType.message_return_online_friend);
 				}else {
 					m.setMesType("2");
 					oos.writeObject(m);	
